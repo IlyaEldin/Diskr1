@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <algorithm>
 using namespace std;
 bool ai(bool a, bool b)
 {
@@ -221,7 +222,83 @@ string polzhe()
     SD=SD.substr (0,SD.length()-2);
     return SD;
 }
+string polzhev2()
+{
+    cout<<"ПОЛИНОМ ЖЕГАЛКИНА функции: "<<endl;
+    string G="(";
+    bool zna[8],znach[8],znach1[8];
+    bool x,y,z;
+    int d=8;
+    for (int i=0; i<d; i++) {{
+            if (i<(d/2)) {
+                x=0;
+            } else {
+                x=1;
+            }
+            if ((i==2)||(i==3)||(i==6)||(i==7)) {
+                y=1;
+            } else {
+                y=0;
+            }
+            if ((i%2)==1) {
+                z=1;
+            } else {
+                z=0;
+            }
 
+        }
+        znach[i]=f1(x,y,z);
+        cout<<znach[i];
+    }
+    cout<<endl;
+    zna[7]=znach[0];
+    int k=7;
+    while (k>0) {
+        for(int i=0; i<k; i++) {
+            znach1[i]=znach[i]^znach[i+1];
+            cout<<znach1[i];
+            zna[k-1]=znach1[0];
+        }
+        cout<<endl;
+        for(int i=0; i<k; i++) {
+            znach[i]=znach1[i];
+        }
+        k--;
+    }
+    reverse(zna,zna+8);
+    for(int i=0; i<8; i++) {
+        if (zna[i]==1) {
+            switch (i) {
+            case 0:
+                G=G+"1)+(";
+                break;
+            case 1:
+                G=G+"z"+")+(";
+                break;
+            case 2:
+                G=G+"y"+")+(";
+                break;
+            case 3:
+                G=G+"yz"+")+(";
+                break;
+            case 4:
+                G=G+"x"+")+(";
+                break;
+            case 5:
+                G=G+"xz"+")+(";
+                break;
+            case 6:
+                G=G+"xy"+")+(";
+                break;
+            case 7:
+                G=G+"xyz"+")+(";
+                break;
+            }
+        }
+    }
+    G=G.substr (0,G.length()-2);
+    return G;
+}
 
 
 
@@ -261,9 +338,10 @@ void xyz ()
 int main()
 {
     xyz();
-    cout<<SDNF()<<endl;
-    cout<<SKNF()<<endl;
+    //cout<<SDNF()<<endl;
+    //cout<<SKNF()<<endl;
     cout<<polzhe()<<endl;
+    cout<<polzhev2();
     return 0;
 }
 // & & — логическое «И» или логическое умножение (конъюнкция). Оператор И возвращает истину, если верны оба утверждения.
